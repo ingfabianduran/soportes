@@ -1,0 +1,87 @@
+<% include head %>
+        <div class="container-fluid d-flex justify-content-center container-main mb-5">
+            <div class="col-sm-10 col-md-6 col-lg-8 col-xl-8 mt-5 mb-5">
+                <div class="card mb-5">
+                    <h1 class="card-header text-center text-white font-weight-bold text-uppercase py-4 light-green lighten-2">Nuevo Soporte</h1>
+                    <div class="card-body">
+                        <form id="formSoporte" method="POST" autocomplete="off" class="ui large form m-3">
+                            <div class="field required">
+                                <label>Tipo de Servicio:</label>
+                                <select class="ui fluid search selection dropdown" id="tipo" name="tipo">
+                                    <option value="">Elige</option>
+                                    <% for (let index = 0; index < info.servicios.length; index++) { %>
+                                        <option value="<%= info.servicios[index] %>"><%= info.servicios[index] %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="field required">
+                                <label>Técnico:</label>
+                                <select class="ui fluid search selection dropdown" id="tecnico" name="tecnico">
+                                    <option value="">Elige</option>
+                                    <% for (let index = 0; index < info.tecnicos.length; index++) { %>
+                                        <option value="<%= info.tecnicos[index] %>"><%= info.tecnicos[index] %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="field required">
+                                <label>Correo Institucional:</label>
+                                <div class="ui icon input loading" id="divSolicitante">
+                                    <input type="text" id="solicitante" name="solicitante" placeholder="Tu respuesta">
+                                    <i class="search icon d-none" id="icoSolicitante"></i>
+                                </div>
+                            </div>
+                            <div class="field required">
+                                <label>Perfil del Solicitante:</label>
+                                <select class="ui fluid search selection dropdown" id="perfil" name="perfil">
+                                    <option value="">Elige</option>
+                                    <% for (let index = 0; index < info.perfiles.length; index++) { %>
+                                         <option value="<%= info.perfiles[index] %>"><%= info.perfiles[index] %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="field required">
+                                <label>Lugar:</label>
+                                <select class="ui fluid search selection dropdown" id="lugar" name="lugar">
+                                    <option value="">Elige</option>
+                                    <% for (let index = 0; index < info.bloques.length; index++) { %>
+                                        <option value="<%= info.bloques[index] %>"><%= info.bloques[index] %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="field required">
+                                <label>Salón:</label>
+                                <input type="text" id="salon" name="salon" placeholder="Tu respuesta">
+                            </div>
+                            <div class="field required">
+                                <label>Labor Realizada:</label>
+                                <select class="ui fluid search dropdown labor disabled" id="labor" name="labor">
+                                    <option value="">Elige</option>                                    
+                                </select>
+                            </div>
+                            <div class="field required">
+                                <label>Incidente Solucionado:</label>
+                                <select class="ui fluid search dropdown disabled fallo" id="fallo" name="fallo">
+                                    <option value="">Elige</option>
+                                    <% for (let index = 0; index < info.soluciones.length; index++) { %>
+                                        <option value="<%= info.soluciones[index] %>"><%= info.soluciones[index] %></option>
+                                    <% } %>                                    
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-center mt-5">
+                                <div class="col-sm-10 col-md-6">
+                                    <button type="submit" class="btn text-light orange btn-block">Enviar</button>
+                                    <button type="button" class="btn btn-elegant btn-block">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                        <p class="font-weight-bolder">¿Eres Admin? Ingresa <a href="https://reportes-unbosque.herokuapp.com/#/">Aquí!!!</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/Peticiones/ajaxCorreo.js"></script>
+        <script src="js/Peticiones/ajaxError.js"></script>
+    </body>
+</html>

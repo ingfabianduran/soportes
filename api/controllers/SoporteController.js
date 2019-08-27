@@ -1,0 +1,139 @@
+/**
+ * SoporteController
+ *
+ * @description :: Server-side logic for managing Soportes
+ * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
+ */
+
+const Soporte = require("../models/Soporte");
+const rules = require("./Rules/RulesSoporte");
+const data = require("./Data/data");
+
+module.exports = {
+    // Render view main.ejs:
+    viewInfo: function(req, res) 
+    {
+        const info = data.dataForm();
+        res.render("main", {info: info});
+    },
+    // Trae la lista de las posibles labores realizadas: 
+    viewLabores: function(req, res) 
+    {
+        const servicio = {
+            tipoServicio: req.params.tipoServicio,
+        };
+
+        const ruleValidate = rules.ruleTypeTipoServicio(servicio);
+
+        if (ruleValidate.error != null)
+        {
+            res.send({status: false, message: "Ops!!! Algo raro paso por aca"});
+        } 
+        else
+        {
+            const labores = data.dataLaborRealizada(servicio.tipoServicio);
+            res.send({status: true, labores: labores});
+        }
+    },
+    // get email text:
+    getEmail: function(req, res)
+    {
+        const tecnico = {
+            nombre: req.params.nombre
+        };
+
+        const ruleValidate = rules.ruleNameTecnico(tecnico);
+
+        if (ruleValidate.error == null)
+        {
+            const correo = data.dataEmailTecnicos(tecnico.nombre);
+            res.send({status: true, correo: correo});
+        }
+        else
+        {
+            res.send({status: false, message: "Ops!!! Algo raro paso por aca"});
+        }
+    },
+    // Render template mail plantilla.ejs:
+    viewEmail: function(req, res) 
+    {
+        const soporte = data.dataEmail();
+        res.render("plantilla", {soporte: soporte});    
+    },
+    // Send email with template plantilla.ejs and info dinamic: 
+    sendEmail: function(req, res) 
+    {   
+        const moment = require("moment-timezone");
+        const soporte = 
+        {
+            servicio: req.body.tipo,
+            tecnico: req.body.tecnico,
+            solicitante: req.body.solicitante,
+            perfil: req.body.perfil,
+            bloque: req.body.lugar,
+            salon: req.body.salon,
+            labor: req.body.labor,
+            solucionado: req.body.solucionado,
+            fecha: moment().tz("America/Bogota").format("YYYY/MM/DD"),
+        };
+        
+        if (soporte.solucionado == null || soporte.solucionado == "") soporte.solucionado = "No Aplica";
+
+        const ruleValidate = rules.ruleInfoCorreo(soporte);
+
+        if (ruleValidate.error != null)
+        {
+            res.send({status: false, message: "Datos Invalidos"});
+        }
+        else 
+        {
+            const newSupport = new Soporte(soporte);
+            newSupport.save((err) => {
+                if (!err)
+                {
+                    const correo = "mesadeservicio@unbosque.edu.co";
+                    const nodemailer = require("nodemailer");
+                    const ejs = require("ejs");
+                    const path = require("path");
+                    const ruta = path.join(__dirname, "../", "../", "views", "plantilla.ejs");
+                    soporte.fecha = moment().tz("America/Bogota").format("L") + " - " +  moment().tz("America/Bogota").format("LT");
+
+                    const transporter = nodemailer.createTransport({
+                        service: "gmail",
+                        auth:{
+                            user: "soporteunbosque@gmail.com",
+                            pass: "Unibosque2019"
+                        }
+                    });
+
+                    ejs.renderFile(ruta, {soporte: soporte}, function(err, data) 
+                    {
+                        if (err)
+                        {
+                            res.send({status: false, message: "Error al preparar los datos"});
+                        }
+                        else
+                        {
+                            const mailOptions = {
+                                from: "soporteunbosque@gmail.com",
+                                to: correo,
+                                subject: "Soporte Realizado",
+                                html: data
+                            };
+
+                            transporter.sendMail(mailOptions, function(err, info) 
+                            {
+                                if (err) res.send({status: false, message: "Error al enviar los datos"});
+                                else res.send({status: true, message: "Reporte enviado correctamente"});
+                            });
+                        }    
+                    });
+                }
+                else
+                {
+                    res.send({status: false, message: "Error con la BD"});
+                }
+            });
+        }
+    }
+};
