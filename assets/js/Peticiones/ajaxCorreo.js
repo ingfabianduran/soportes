@@ -130,16 +130,54 @@ function validateFormCorreo()
     });
 }
 // Alert view where select Audiovisuales, Desarrollo Fisico or Redes: 
-async function viewAlertOtherReport()
+async function viewAlertOtherReport(type)
 {
     const { value: text } = await Swal.fire({
+        title: type,
+        type: 'warning',
         input: 'textarea',
-        inputPlaceholder: 'Type your message here...',
+        inputPlaceholder: 'Por favor indique el incidente',
         inputAttributes: {
-          'aria-label': 'Type your message here'
+          'aria-label': 'Por favor indique el incidente'
         },
-        showCancelButton: true
+        showCancelButton: true,
+        confirmButtonText: 'Enviar',
+        confirmButtonColor: '#ff9800',
+        cancelButtonColor: '#212121',
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            return new Promise((resolve) => {
+              setTimeout(function () {
+                resolve()
+              }, 2000)
+            })
+        },
     });
+
+    if (text) 
+    {
+        const data = {
+            type: type,
+            incidente: text,
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/sendAdicional",
+            data: JSON.stringify(data),
+            contentType : "application/json",
+            dataType: "json",
+            success: function (response) {
+                Swal.fire("Good!!!", response.message, "success").then(function() {
+                    location.href = "/main";
+                });
+            },
+        });
+    } 
+    else 
+    {
+        location.href = "/main";
+    }
 }
 // Peticion AJAX que captura el tipo de servicio y llena el select labor realizada:
 $("#tipo").change(function (e) 

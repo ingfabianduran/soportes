@@ -60,6 +60,17 @@ module.exports = {
         const soporte = data.dataEmail();
         res.render("plantilla", {soporte: soporte});    
     },
+    // Render template mail plantillaAdicional.ejs:
+    viewEmailAdicional: function(req, res)
+    {
+        const soporte = data.dataEmailAdicional();
+        res.render("plantillaAdicional", {soporte: soporte});   
+    },
+    // Send email with template plantillaAdicional.ejs and info dinamic: 
+    sendEmailAdicional: function(req, res)
+    {
+        res.send({message: "OK"});
+    },
     // Send email with template plantilla.ejs and info dinamic: 
     sendEmail: function(req, res) 
     {   

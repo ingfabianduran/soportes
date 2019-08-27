@@ -48,9 +48,17 @@ module.exports.routes = {
     controller: "SoporteController",
     action: "viewEmail"
   },
+  '/correoAdicional': {
+    controller: "SoporteController",
+    action: "viewEmailAdicional"
+  },
   '/send': {
     controller: "SoporteController",
     action: "sendEmail"
+  },
+  '/sendAdicional': {
+    controller: "SoporteController",
+    action: "sendEmailAdicional"
   }
   /***************************************************************************
   *                                                                          *
