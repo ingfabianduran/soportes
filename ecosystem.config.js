@@ -10,12 +10,22 @@ module.exports = {
     env: {
       NODE_ENV: 'development',
       URL_DB: 'mongodb://localhost:27017/soportes',
-      NAME_DB: 'soportes'
+      NAME_DB: 'soportes',
+      AUDIOVISUALES: 'audiovisuales@unbosque.edu.co',
+      IT: 'asistenteit@unbosque.edu.co',
+      MESA: 'mesadeservicio@unbosque.edu.co',
+      EMAIL: 'soporteunbosque@gmail.com',
+      PASSWORD_EMAIL: 'Unibosque2019',
     },
     env_production: {
       NODE_ENV: 'production',
       URL_DB: 'mongodb+srv://soporte:Lenovo1993@soportes19-kjgq0.mongodb.net/test?retryWrites=true&w=majority',
-      NAME_DB: 'soportes'
+      NAME_DB: 'soportes',
+      AUDIOVISUALES: 'audiovisuales@unbosque.edu.co',
+      IT: 'asistenteit@unbosque.edu.co',
+      MESA: 'mesadeservicio@unbosque.edu.co',
+      EMAIL: 'soporteunbosque@gmail.com',
+      PASSWORD_EMAIL: 'Unibosque2019',
     }
   }],
 };

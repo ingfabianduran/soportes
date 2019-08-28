@@ -5,7 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
-    "ejs": "2.3.4",
+    "ejs": "^2.6.2",
     "express-mailer": "^0.3.1",
     "grunt": "1.0.1",
     "grunt-contrib-clean": "1.0.0",

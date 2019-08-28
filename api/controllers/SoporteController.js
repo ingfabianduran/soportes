@@ -69,7 +69,30 @@ module.exports = {
     // Send email with template plantillaAdicional.ejs and info dinamic: 
     sendEmailAdicional: function(req, res)
     {
-        res.send({message: "OK"});
+        const moment = require("moment-timezone");
+
+        const soporte = {
+            type: req.body.type,
+            incidente: req.body.incidente,
+            fecha: moment().tz("America/Bogota").format("YYYY/MM/DD"),
+        };
+
+        const ruleValidate = rules.ruleEmailAdicional(soporte);
+
+        if (ruleValidate.error != null)
+        {
+            res.send({status: false, message: "Datos Invalidos"});
+        }
+        else
+        {   
+            var correo = ""; 
+
+            if (soporte.type == "Audiovisuales") correo = process.env.AUDIOVISUALES;
+            if (soporte.type == "Desarrollo Fisico") correo = process.env.IT;
+            if (soporte.type == "Redes") correo = process.env.MESA;
+
+            res.send({status: true, message: "Ok"});
+        }
     },
     // Send email with template plantilla.ejs and info dinamic: 
     sendEmail: function(req, res) 
@@ -102,7 +125,7 @@ module.exports = {
             newSupport.save((err) => {
                 if (!err)
                 {
-                    const correo = "mesadeservicio@unbosque.edu.co";
+                    const correo = process.env.MESA;
                     const nodemailer = require("nodemailer");
                     const ejs = require("ejs");
                     const path = require("path");
@@ -112,8 +135,8 @@ module.exports = {
                     const transporter = nodemailer.createTransport({
                         service: "gmail",
                         auth:{
-                            user: "soporteunbosque@gmail.com",
-                            pass: "Unibosque2019"
+                            user: process.env.EMAIL,
+                            pass: process.env.PASSWORD_EMAIL
                         }
                     });
 
@@ -126,7 +149,7 @@ module.exports = {
                         else
                         {
                             const mailOptions = {
-                                from: "soporteunbosque@gmail.com",
+                                from: process.env.EMAIL,
                                 to: correo,
                                 subject: "Soporte Realizado",
                                 html: data

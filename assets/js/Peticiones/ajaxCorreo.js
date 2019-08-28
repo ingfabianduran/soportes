@@ -168,9 +168,16 @@ async function viewAlertOtherReport(type)
             contentType : "application/json",
             dataType: "json",
             success: function (response) {
-                Swal.fire("Good!!!", response.message, "success").then(function() {
-                    location.href = "/main";
-                });
+                if (response.status)
+                {
+                    Swal.fire("Good!!!", response.message, "success").then(function() {
+                        location.href = "/main";
+                    });
+                }
+                else 
+                {
+                    Swal.fire("Ops!!!", res.message, "error");
+                }
             },
         });
     } 

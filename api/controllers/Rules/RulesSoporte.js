@@ -38,5 +38,17 @@ module.exports = {
 
         const result = joi.validate(data, dataValidate);
         return result;
+    },
+    // Rule validate info correo: 
+    ruleEmailAdicional: function(data)
+    {
+        const dataValidate = joi.object().keys({
+            type: joi.string().valid("Audiovisuales", "Desarrollo Fisico", "Redes").required(),
+            incidente: joi.string().required(),
+            fecha: joi.string().required()
+        });
+
+        const result = joi.validate(data, dataValidate);
+        return result;
     }
 }
