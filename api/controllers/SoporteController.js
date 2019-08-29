@@ -74,7 +74,7 @@ module.exports = {
         const soporte = {
             type: req.body.type,
             incidente: req.body.incidente,
-            fecha: moment().tz("America/Bogota").format("YYYY/MM/DD"),
+            fecha:  moment().tz("America/Bogota").format("L") + " - " +  moment().tz("America/Bogota").format("LT")
         };
 
         const ruleValidate = rules.ruleEmailAdicional(soporte);
@@ -85,13 +85,46 @@ module.exports = {
         }
         else
         {   
-            var correo = ""; 
+            var correo = "";
+            const nodemailer = require("nodemailer");
+            const ejs = require("ejs");
+            const path = require("path");
+            const ruta = path.join(__dirname, "../", "../", "views", "plantillaAdicional.ejs");
 
             if (soporte.type == "Audiovisuales") correo = process.env.AUDIOVISUALES;
             if (soporte.type == "Desarrollo Fisico") correo = process.env.IT;
             if (soporte.type == "Redes") correo = process.env.MESA;
 
-            res.send({status: true, message: "Ok"});
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth:{
+                    user: process.env.EMAIL,
+                    pass: process.env.PASSWORD_EMAIL
+                }
+            });
+
+            ejs.renderFile(ruta, {soporte: soporte}, function(err, data) 
+            {
+                if (err)
+                {
+                    res.send({status: false, message: "Error al preparar los datos"});
+                }
+                else
+                {
+                    const mailOptions = {
+                        from: process.env.EMAIL,
+                        to: correo,
+                        subject: "Reporte Incidente",
+                        html: data
+                    };
+
+                    transporter.sendMail(mailOptions, function(err, info) 
+                    {
+                        if (err) res.send({status: false, message: "Error al enviar los datos"});
+                        else res.send({status: true, message: "Reporte enviado correctamente"});
+                    });
+                }    
+            });
         }
     },
     // Send email with template plantilla.ejs and info dinamic: 

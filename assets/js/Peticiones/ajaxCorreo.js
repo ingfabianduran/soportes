@@ -149,7 +149,7 @@ async function viewAlertOtherReport(type)
             return new Promise((resolve) => {
               setTimeout(function () {
                 resolve()
-              }, 2000)
+              }, 3000)
             })
         },
     });
