@@ -7,7 +7,7 @@
                         <form id="formSoporte" method="POST" autocomplete="off" class="ui large form m-3">
                             <div class="field required">
                                 <label>Tipo de Servicio:</label>
-                                <select class="ui fluid search selection dropdown" id="tipo" name="tipo">
+                                <select class="ui fluid search selection dropdown tipo" id="tipo" name="tipo">
                                     <option value="">Elige</option>
                                     <% for (let index = 0; index < info.servicios.length; index++) { %>
                                         <option value="<%= info.servicios[index] %>"><%= info.servicios[index] %></option>

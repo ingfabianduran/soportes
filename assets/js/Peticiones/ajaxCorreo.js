@@ -57,13 +57,65 @@ function validateFormCorreo()
     $.fn.form.settings.rules.resIncidente = function(value, adminLevel) 
     {
         const servicio = $("#tipo").val();
+        const labor = $("#labor").val();
         
-        if (servicio == "Soporte") {
-            if (value == "Si" || value == "No") return true;
-            else return false;
+        if (servicio == "Soporte") 
+        {
+            if (labor == "Soporte No Necesario")
+            {
+                return true;
+            }
+            else 
+            {
+                if (value == "Si" || value == "No") return true;
+                else return false;
+            }
         }
-        if (servicio == "Mantenimiento") {
+        if (servicio == "Mantenimiento") 
+        {
             return true;
+        }
+    };
+    // Add rules perzonalizadas: Si el bloque es L entonces la longitud no tiene un limite: Min Legth
+    $.fn.form.settings.rules.minSalon = function(value, adminLevel) 
+    {
+        const bloque = $("#lugar").val();
+
+        if (bloque == "Bloque L") 
+        {
+            return true; 
+        }
+        else 
+        {
+            if (value.length >= 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    };
+    // Add rules perzonalizadas: Si el bloque es L entonces la longitud no tiene un limite: Max length 
+    $.fn.form.settings.rules.maxSalon = function(value, adminLevel) 
+    {
+        const bloque = $("#lugar").val();
+
+        if (bloque == "Bloque L") 
+        {
+            return true; 
+        }
+        else 
+        {
+            if (value.length <= 4)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     };
     
@@ -103,8 +155,8 @@ function validateFormCorreo()
                 identifier: "salon",
                 rules: [
                     {type: "empty", prompt: "Digite un salon"},
-                    {type: "minLength[3]", prompt: "Minimo 3 caracteres"},
-                    {type: "maxLength[4]", prompt: "Maximo 4 caracteres"},
+                    {type: "minSalon", prompt: "Minimo 3 caracteres"},
+                    {type: "maxSalon", prompt: "Maximo 4 caracteres"}
                 ]
             },
             labores: {
@@ -149,7 +201,7 @@ async function viewAlertOtherReport(type)
             return new Promise((resolve) => {
               setTimeout(function () {
                 resolve()
-              }, 3000)
+              }, 1000)
             })
         },
     });
@@ -167,6 +219,10 @@ async function viewAlertOtherReport(type)
             data: JSON.stringify(data),
             contentType : "application/json",
             dataType: "json",
+            beforeSend: function() {
+                $(".ui.fluid.search.dropdown.tipo").addClass("disabled"); 
+                $("#formSoporte").addClass("loading");
+            },
             success: function (response) {
                 if (response.status)
                 {
@@ -261,4 +317,12 @@ $("#tecnico").change(function (e)
             }, 3000);
         }
     });
+});
+// Evento al cambiar el valor del select labor: 
+$("#labor").change(function (e) 
+{ 
+    e.preventDefault();
+    const labor = $(this).val();
+
+    if (labor == "Soporte No Necesario") $(".ui.fluid.search.dropdown.fallo").addClass("disabled");
 });
