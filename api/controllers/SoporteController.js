@@ -8,6 +8,7 @@
 const Soporte = require("../models/Soporte");
 const rules = require("./Rules/RulesSoporte");
 const data = require("./Data/data");
+require('dotenv').config();
 
 module.exports = {
     // Render view main.ejs:

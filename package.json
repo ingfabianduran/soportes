@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "dotenv": "^8.1.0",
     "ejs": "^2.6.2",
     "express-mailer": "^0.3.1",
     "grunt": "1.0.1",
@@ -31,10 +32,10 @@
     "sails-hook-email": "^0.12.1"
   },
   "scripts": {
-    "preinstall": "npm install pm2 -g",
-    "start": "pm2-runtime start ./ecosystem.config.js --env development",
+    "// preinstall": "npm install pm2 -g",
+    "// start": "pm2-runtime start ./ecosystem.config.js --env env_production",
     "// debug": "node debug app.js",
-    "// start": "node app.js"
+    "start": "node app.js"
   },
   "main": "app.js",
   "repository": {
