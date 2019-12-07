@@ -16,6 +16,8 @@ module.exports = {
     {
         const info = data.dataForm();
         res.render("main", {info: info});
+
+        // res.render("redirect");
     },
     // Trae la lista de las posibles labores realizadas: 
     viewLabores: function(req, res) 
