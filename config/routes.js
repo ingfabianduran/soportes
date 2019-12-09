@@ -36,7 +36,6 @@ module.exports.routes = {
     controller: "SoporteController",
     action: "viewInfo"
   },
-  /*
   '/labores/:tipoServicio': {
     controller: "SoporteController",
     action: "viewLabores"
@@ -61,7 +60,6 @@ module.exports.routes = {
     controller: "SoporteController",
     action: "sendEmailAdicional"
   }
-  */
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
