@@ -3,7 +3,7 @@ module.exports = {
     dataForm: function()
     {
         const servicios = ["Soporte", "Mantenimiento", "Audiovisuales", "Desarrollo Fisico", "Redes"];
-        const tecnicos = ["Elige", "John Jairo Agudelo", "Julian Camilo Lopez", "Orlando Garcia Zapata", "Fabian Esteban Duran", "Ivan Arturo Ortiz", "David Stiven Martinez", "Sebastian Torres"];
+        const tecnicos = ["Elige", "John Jairo Agudelo", "Fabian Esteban Duran", "Ivan Arturo Ortiz", "David Stiven Martinez", "Sebastian Torres", "Nelson Enrique Alvarez"];
         const perfiles = ["Administrativo", "Docente", "Estudiante"];
         const bloques = ["Bloque A", "Bloque B", "Bloque C", "Bloque E", "Bloque F", "Bloque G", "Bloque I", "Bloque J", "Bloque K", "Bloque L", "Bloque M", "Bloque N", "Bloque O", "Edificio HUB", "Centro de Lenguas", "Casa Fotografia"];
         const soluciones = ["Si", "No"];

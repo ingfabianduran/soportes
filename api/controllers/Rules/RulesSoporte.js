@@ -16,7 +16,7 @@ module.exports = {
     {
         const dataValidate = joi.object().keys({
             servicio: joi.string().valid("Soporte", "Mantenimiento").required(),
-            tecnico: joi.string().valid("John Jairo Agudelo", "Julian Camilo Lopez", "Orlando Garcia Zapata", "Fabian Esteban Duran", "Ivan Arturo Ortiz", "David Stiven Martinez", "Sebastian Torres").required(),
+            tecnico: joi.string().valid("John Jairo Agudelo", "Julian Camilo Lopez", "Orlando Garcia Zapata", "Fabian Esteban Duran", "Ivan Arturo Ortiz", "David Stiven Martinez", "Sebastian Torres", "Nelson Enrique Alvarez").required(),
             solicitante: joi.string(),
             perfil: joi.string().valid("Administrativo", "Docente", "Estudiante").required(),
             bloque: joi.string().valid("Bloque A", "Bloque B", "Bloque C", "Bloque E", "Bloque F", "Bloque G", "Bloque I", "Bloque J", "Bloque K", "Bloque L", "Bloque M", "Bloque N", "Bloque O", "Edificio HUB", "Centro de Lenguas", "Casa Fotografia").required(),
