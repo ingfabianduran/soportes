@@ -14,10 +14,10 @@ module.exports = {
     // Render view main.ejs:
     viewInfo: function(req, res) 
     {
-        const info = data.dataForm();
-        res.render("main", {info: info});
+        // const info = data.dataForm();
+        // res.render("main", {info: info});
 
-        // res.render("redirect");
+        res.render("redirect");
     },
     // Trae la lista de las posibles labores realizadas: 
     viewLabores: function(req, res) 
