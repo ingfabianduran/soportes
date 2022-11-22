@@ -27,7 +27,7 @@
     "mongoose": "^5.6.6",
     "nodemailer": "^5.1.1",
     "rc": "1.0.1",
-    "sails": "~0.12.14",
+    "sails": "~1.5.3",
     "sails-disk": "~0.10.9",
     "sails-hook-email": "^0.12.1"
   },
